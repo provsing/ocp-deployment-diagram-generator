@@ -1,9 +1,642 @@
 @startuml
+package "3scale-apicast-ingress-ext" {
+  artifact "apicast-european-expansion-ext-prod-3scale-apicast-ingress-ext"
+  artifact "apicast-european-expansion-ext-stage-3scale-apicast-ingress-ext"
+}
+package "3scale-apicast-ingress-int" {
+  artifact "apicast-european-expansion-int-prod-3scale-apicast-ingress-int"
+  artifact "apicast-european-expansion-int-stage-3scale-apicast-ingress-int"
+}
+package "3scale-jmeter" {
+  artifact "jmeter"
+  artifact "web-test"
+}
 package "apibdg-amq-all-dev" {
   artifact "amq"
+  artifact "amq-metrics-exporter"
 }
-package "dims-amq-all-dev" {
-  artifact "dims-metrics-exporter"
+package "bee-amq-cph-dev" {
+  artifact "amq"
+  artifact "amq-metrics-exporter"
 }
-"apibdg-amq-all-dev" ..> "dims-amq-all-dev" : 5672/TCP 61617/TCP
+package "bee-amq-mil-dev" {
+  artifact "amq"
+  artifact "amq-metrics-exporter"
+}
+package "bee-amq-pto-dev" {
+  artifact "amq"
+  artifact "amq-metrics-exporter"
+}
+package "dcutrupi" {
+  artifact "artemis"
+}
+package "digitalapps-ext-megara-cph-dev" {
+  artifact "issuercsd-deployment"
+  artifact "webportal-deployment"
+}
+package "digitalapps-ext-megara-mil-dev" {
+  artifact "issuercsd-deployment"
+  artifact "webportal-deployment"
+}
+package "digitalapps-ext-megara-osl-dev" {
+  artifact "issuercsd-deployment"
+  artifact "webportal-deployment"
+}
+package "es-ca4u-bridge-all-dev" {
+  artifact "ca4u-bridge"
+}
+package "es-cross-cutting-all-dev" {
+  artifact "audit-trail"
+  artifact "es-crosscutting-app-deployment"
+  artifact "es-crosscutting-ui-deployment"
+  artifact "message-dispatcher"
+  artifact "platform-updater"
+}
+package "es-crosscutting-amq-cph-dev" {
+  artifact "amq"
+  artifact "amq-metrics-exporter"
+}
+package "es-crosscutting-kafka-all-dev" {
+}
+package "es-crosscutting-uam-all-dev" {
+  artifact "authz-model-exposer"
+  artifact "authz-model-ingest-data"
+  artifact "openfga"
+}
+package "es-issuance-backend-all-dev" {
+  artifact "kafka-ui"
+  artifact "nna-apicurio-registry-app-deployment"
+  artifact "nna-apicurio-registry-ui-deployment"
+  artifact "nna-entity-operator"
+  artifact "nna-service"
+}
+package "es-issuance-frontend-all-dev" {
+}
+package "es-settlement-backend-all-dev" {
+  artifact "settlement-core"
+}
+package "es-settlement-frontend-all-dev" {
+}
+package "es-u2a-backend-all-dev" {
+}
+package "es-u2a-frontend-all-dev" {
+}
+package "gitlab-poc-bgo-dev" {
+  artifact "demo-webserver"
+}
+package "jboss-demo-bgo-dev" {
+  artifact "jboss-demo"
+}
+package "megara-cph-amq-dev" {
+  artifact "amq"
+  artifact "amq-metrics-exporter"
+}
+package "megara-cph-dev" {
+  artifact "megabroker-deployment"
+  artifact "megacash-deployment"
+  artifact "megacor-deployment"
+}
+package "megara-mil-amq-dev" {
+  artifact "amq"
+  artifact "amq-metrics-exporter"
+}
+package "megara-mil-dev" {
+  artifact "megabroker-deployment"
+  artifact "megacash-deployment"
+  artifact "megacor-deployment"
+}
+package "megara-osl-amq-dev" {
+  artifact "amq"
+  artifact "amq-metrics-exporter"
+}
+package "megara-osl-dev" {
+  artifact "megabroker-deployment"
+  artifact "megacash-deployment"
+  artifact "megacor-deployment"
+}
+package "megara-pipeline-test" {
+  artifact "amq-pipeline-test"
+  artifact "megabroker-deployment"
+  artifact "megacor-deployment"
+  artifact "notebook"
+  artifact "pg01-pipeline-test-pgbouncer"
+}
+package "megara-pto-amq-dev" {
+  artifact "amq"
+  artifact "amq-metrics-exporter"
+}
+package "megara-pto-dev" {
+  artifact "issuercsd-deployment"
+  artifact "megabroker-deployment"
+  artifact "megacash-deployment"
+  artifact "megacor-deployment"
+  artifact "webportal-deployment"
+  artifact "workspace078be532f6ed4012"
+}
+package "mh-ci-dev" {
+  artifact "el-csd-mhb-ims-eventlistener-v2"
+}
+package "mh-cph-dev" {
+  artifact "amq"
+  artifact "amq-metrics-exporter"
+  artifact "amqprints"
+  artifact "amqprints-metrics-exporter"
+  artifact "formserver"
+  artifact "ims-annaconvtojson"
+  artifact "ims-annagatein"
+  artifact "ims-careftomegaracph"
+  artifact "ims-finanalysis"
+  artifact "ims-finbuildeform"
+  artifact "ims-fincatransform"
+  artifact "ims-findupcheckout"
+  artifact "ims-fingateincph"
+  artifact "ims-fingateinmegara"
+  artifact "ims-fingateinresponse"
+  artifact "ims-fingateout"
+  artifact "ims-fingateoutseq"
+  artifact "ims-fingenerateacknak"
+  artifact "ims-finioswitch"
+  artifact "ims-finpdxcheck"
+  artifact "ims-finroute"
+  artifact "ims-finservicerequest"
+  artifact "ims-genbusimport"
+  artifact "ims-genfailedhandler"
+  artifact "ims-genibploader"
+  artifact "ims-genibpservicerequest"
+  artifact "ims-genrefdataloader"
+  artifact "ims-gensender"
+  artifact "ims-gensequencer"
+  artifact "ims-genstatuscollector"
+  artifact "ims-gensyncinvoicetodb2"
+  artifact "ims-jsonconvtocsv"
+  artifact "ims-jsonconvtomxsrd2cph"
+  artifact "ims-jsongatein"
+  artifact "ims-jsongateincph"
+  artifact "ims-jsonroute"
+  artifact "ims-mxanalysis"
+  artifact "ims-mxbuildeform"
+  artifact "ims-mxcaconvtodb2cph"
+  artifact "ims-mxcafilter"
+  artifact "ims-mxcatransform"
+  artifact "ims-mxcatransformlegacy"
+  artifact "ims-mxconvtojsonsrd2cph"
+  artifact "ims-mxconvtosizedcph"
+  artifact "ims-mxconvtot2srecovery"
+  artifact "ims-mxdupcheckin"
+  artifact "ims-mxdupcheckinsttlm"
+  artifact "ims-mxdupcheckout"
+  artifact "ims-mxgateincph"
+  artifact "ims-mxgateinmegara"
+  artifact "ims-mxgateinresponse"
+  artifact "ims-mxgateint2sseq"
+  artifact "ims-mxgateout"
+  artifact "ims-mxgateoutseq"
+  artifact "ims-mxgateoutsplitting"
+  artifact "ims-mxgenerateacknak"
+  artifact "ims-mxnormalize"
+  artifact "ims-mxroute"
+  artifact "ims-mxservicerequest"
+  artifact "ims-mxt2sunbulk"
+  artifact "ims-phxreftophoenixcph"
+  artifact "ims-sizedconvtofincph"
+  artifact "ims-sizedconvtomxcph"
+  artifact "ims-sizedgateincph"
+  artifact "ims-sizedroute"
+  artifact "ims-subscriptionsyncsrtopostgresql"
+  artifact "ims-testloader"
+  artifact "ims-testreporter"
+  artifact "kibana-kb"
+  artifact "network-toolbox"
+  artifact "portal"
+  artifact "prints-ingestion-engine"
+  artifact "sftp-server"
+  artifact "shotgun-backend"
+  artifact "shotgun-frontend"
+  artifact "subscription-routing-backend"
+  artifact "subscription-routing-frontend"
+  artifact "traefik"
+}
+package "mh-data-all-dev" {
+}
+package "mh-mil-dev" {
+  artifact "amq"
+  artifact "amqprints"
+  artifact "formserver"
+  artifact "ims-apibridgegateout"
+  artifact "ims-careftomegaramil"
+  artifact "ims-fileconvtomxmil"
+  artifact "ims-finanalysis"
+  artifact "ims-finconvtomxmil"
+  artifact "ims-finconvtornimil"
+  artifact "ims-fingateinmegara"
+  artifact "ims-fingateinmil"
+  artifact "ims-fingateout"
+  artifact "ims-finpdxcheck"
+  artifact "ims-finroute"
+  artifact "ims-genbusimport"
+  artifact "ims-genfailedhandler"
+  artifact "ims-genibploader"
+  artifact "ims-genibpservicerequest"
+  artifact "ims-genrefdataloader"
+  artifact "ims-genstatuscollector"
+  artifact "ims-jsonconvtofinbnt"
+  artifact "ims-jsongateout"
+  artifact "ims-jsonroute"
+  artifact "ims-mxanalysismil"
+  artifact "ims-mxcafilter"
+  artifact "ims-mxconvtofinmil"
+  artifact "ims-mxconvtomxmil"
+  artifact "ims-mxconvtornimil"
+  artifact "ims-mxconvtosizedmil"
+  artifact "ims-mxconvtot2srecovery"
+  artifact "ims-mxdupcheckin"
+  artifact "ims-mxgateinmegaramil"
+  artifact "ims-mxgateinmil"
+  artifact "ims-mxgateinresponse"
+  artifact "ims-mxgateout"
+  artifact "ims-mxnormalize"
+  artifact "ims-mxroute"
+  artifact "ims-mxt2stestloader"
+  artifact "ims-routeptcs"
+  artifact "ims-sizedconvtofinmil"
+  artifact "ims-sizedconvtomxmil"
+  artifact "ims-sizedgateinmil"
+  artifact "ims-sizedroute"
+  artifact "ims-subscriptionsyncsrtopostgresql"
+  artifact "ims-testloader"
+  artifact "ims-testreporter"
+  artifact "kibana-kb"
+  artifact "msgtester"
+  artifact "network-toolbox"
+  artifact "portal"
+  artifact "prints-ingestion-engine"
+  artifact "prints-ingestion-engine-monitoring"
+  artifact "shotgun-backend"
+  artifact "shotgun-frontend"
+  artifact "subscription-routing-backend"
+  artifact "subscription-routing-frontend"
+  artifact "traefik"
+  artifact "workspace672bab07cf5148d6"
+}
+package "mh-pto-dev" {
+  artifact "amq"
+  artifact "amq-metrics-exporter"
+  artifact "amqprints"
+  artifact "formserver"
+  artifact "ims-careftomegarapto"
+  artifact "ims-copymegara"
+  artifact "ims-finanalysis"
+  artifact "ims-fincafilter"
+  artifact "ims-fincatransform"
+  artifact "ims-findupcheckout"
+  artifact "ims-fingateinmegara"
+  artifact "ims-fingateinmegaraph2"
+  artifact "ims-fingateinpto"
+  artifact "ims-fingateout"
+  artifact "ims-finpdxcheck"
+  artifact "ims-finroute"
+  artifact "ims-genbusimport"
+  artifact "ims-genfailedhandler"
+  artifact "ims-genibploader"
+  artifact "ims-genibpservicerequest"
+  artifact "ims-genreportingpto"
+  artifact "ims-genstatuscollector"
+  artifact "ims-mxanalysis"
+  artifact "ims-mxcaconvtocsvpto"
+  artifact "ims-mxcafilter"
+  artifact "ims-mxconvtosizedpto"
+  artifact "ims-mxconvtot2srecovery"
+  artifact "ims-mxdupcheckin"
+  artifact "ims-mxgateinmegaraph2"
+  artifact "ims-mxgateinpto"
+  artifact "ims-mxgateout"
+  artifact "ims-mxnormalize"
+  artifact "ims-mxroute"
+  artifact "ims-subscriptionsyncsrtopostgresql"
+  artifact "ims-testloader"
+  artifact "ims-testreporter"
+  artifact "kibana-kb"
+  artifact "metricbeat"
+  artifact "network-toolbox"
+  artifact "portal"
+  artifact "prints-ingestion-engine"
+  artifact "shotgun-backend"
+  artifact "shotgun-frontend"
+  artifact "subscription-routing-backend"
+  artifact "subscription-routing-frontend"
+  artifact "traefik"
+  artifact "workspace14b5abd8795c4e51"
+  artifact "workspace9770dc2162454d52"
+  artifact "workspace9e4cee4381114c47"
+  artifact "workspacecdd773b4d3484342"
+}
+package "nettingapp-amq-mil-dev" {
+  artifact "amq"
+  artifact "amq-metrics-exporter"
+}
+package "nettingapp-backend-mil-dev" {
+  artifact "nettingapp-backend"
+}
+package "nettingapp-frontend-mil-dev" {
+  artifact "nettingapp-frontend"
+}
+package "network-policies-ext-bgo-dev" {
+  artifact "network-policies-demo"
+}
+package "network-policies-int-bgo-dev" {
+  artifact "network-policies-demo"
+}
+package "network-policies-test" {
+  artifact "jmeter-worker"
+  artifact "network-policies-demo-webserver"
+  artifact "postgres-cli-deployment"
+}
+package "pg-cross-cutting-apps-cph-dev" {
+}
+package "pg-cross-cutting-iam-cph-dev" {
+}
+package "pg-custody-ca-mil-dev" {
+}
+package "pg-custody-ca-osl-dev" {
+}
+package "pg-custody-ca-pto-dev" {
+}
+package "pg-euex-dev" {
+}
+package "pg-grafana" {
+  artifact "grafana-a-deployment"
+  artifact "grafana-instance-deployment"
+}
+package "pg-grafana-dev" {
+  artifact "pg-grafana-deployment"
+}
+package "pg-internal-dev" {
+  artifact "psql-client"
+}
+package "pg-issuance-cph-dev" {
+}
+package "pg-issuer-ancillary-mil-dev" {
+}
+package "pg-issuer-phoenix-cph-dev" {
+}
+package "pg-issuer-phoenix-mil-dev" {
+}
+package "pg-issuer-phoenix-osl-dev" {
+}
+package "pg-issuer-ptcs-mil-dev" {
+}
+package "pg-issuer-taxreclaim-dev" {
+}
+package "pg-messagehub-cph-dev" {
+}
+package "pg-messagehub-mil-dev" {
+}
+package "pg-messagehub-pto-dev" {
+}
+package "pg-psql-client-dev" {
+  artifact "psql-client"
+}
+package "pg-settlement-cph-dev" {
+}
+package "pg-taxes-dev" {
+}
+package "pg-testhto-dev" {
+}
+package "phoenix-amq-cph-dev" {
+  artifact "amq"
+  artifact "amq-metrics-exporter"
+}
+package "phoenix-amq-mil-dev" {
+  artifact "amq"
+  artifact "amq-metrics-exporter"
+}
+package "phoenix-amq-osl-dev" {
+  artifact "amq"
+  artifact "amq-metrics-exporter"
+}
+package "phoenix-bgo-dev" {
+  artifact "allure-deployment"
+  artifact "el-gitlab-listener-develop"
+  artifact "el-gitlab-listener-feature"
+  artifact "el-gitlab-listener-release"
+  artifact "httpd-frontend"
+  artifact "httpd-performance-tests"
+  artifact "jmeter-worker"
+  artifact "network-policies-demo"
+  artifact "phoenix-general-meeting-service"
+  artifact "workspace033eca75ed1e422a"
+  artifact "workspace1daa41b934f54688"
+}
+package "phoenix-cph-dev" {
+  artifact "phoenix-csd-interface"
+  artifact "phoenix-general-meeting-gui"
+  artifact "phoenix-general-meeting-investor-gui"
+  artifact "phoenix-general-meeting-service"
+  artifact "phoenix-general-meeting-service-glowroot-test"
+  artifact "phoenix-shareholder-register-gui"
+  artifact "phoenix-shareholder-register-service"
+  artifact "shareholder-register-service"
+  artifact "workspace65cf8144b8f94fea"
+  artifact "workspace663f0669c2bd45cc"
+  artifact "workspacebabd30d2ef814fb5"
+}
+package "phoenix-csd-interface-amq-cph-dev" {
+  artifact "amq"
+  artifact "amq-metrics-exporter"
+}
+package "phoenix-csd-interface-amq-mil-dev" {
+  artifact "amq"
+  artifact "amq-metrics-exporter"
+}
+package "phoenix-csd-interface-amq-osl-dev" {
+  artifact "amq"
+  artifact "amq-metrics-exporter"
+}
+package "phoenix-mil-dev" {
+  artifact "phoenix-csd-interface"
+  artifact "phoenix-general-meeting-gui"
+  artifact "phoenix-general-meeting-investor-gui"
+  artifact "phoenix-general-meeting-service"
+  artifact "phoenix-shareholder-register-gui"
+  artifact "phoenix-shareholder-register-service"
+  artifact "shareholder-register-service"
+}
+package "phoenix-osl-dev" {
+  artifact "phoenix-csd-interface"
+  artifact "phoenix-general-meeting-gui"
+  artifact "phoenix-general-meeting-investor-gui"
+  artifact "phoenix-general-meeting-service"
+  artifact "phoenix-shareholder-register-gui"
+  artifact "phoenix-shareholder-register-service"
+  artifact "shareholder-register-service"
+}
+package "postgres" {
+  artifact "crunchy-alertmanager"
+  artifact "crunchy-grafana"
+  artifact "crunchy-prometheus"
+  artifact "nginx-debug-deployment"
+  artifact "pg01-pgbouncer"
+  artifact "pgadmin"
+}
+package "ptcs-amq-mil-dev" {
+  artifact "amq"
+  artifact "amq-metrics-exporter"
+}
+package "ptcs-beapp-mil-dev" {
+  artifact "ptcs-internal-frontend"
+  artifact "xchanger"
+}
+package "ptcs-db-mil-dev" {
+}
+package "ptcs-extfe-mil-dev" {
+  artifact "ptcs-external-frontend"
+}
+package "rh-sso" {
+}
+package "rpa-bot-backend-mil-dev" {
+  artifact "rpa-bot-backend"
+}
+package "sandbox-cbeck" {
+}
+package "sso" {
+  artifact "keycloak-postgresql"
+  artifact "rhsso-operator"
+}
+package "sso-auth-all-dev" {
+  artifact "el-gitlab-listener-develop"
+  artifact "el-gitlab-listener-feature"
+  artifact "rhbk-operator"
+}
+package "taxreclaim-cph-dev" {
+  artifact "taxreclaim-cph"
+  artifact "workspace3ab3453b405b4d13"
+}
+package "test-amq-sso" {
+  artifact "amq-classic-env-ns-app"
+  artifact "amqprints-classic-env-ns-app"
+}
+"es-ca4u-bridge-all-dev" .[thickness=2;#68dad4].> "apibdg-amq-all-dev" : 5672/TCP 61617/TCP
+"mh-mil-dev" .[thickness=2;#ccae03].> "apibdg-amq-all-dev" : 5672/TCP 61617/TCP
+"es-ca4u-bridge-all-dev" .[thickness=2;#f4d699].> "es-crosscutting-amq-cph-dev" : 61617/TCP
+"es-cross-cutting-all-dev" .[thickness=2;#c9547a].> "es-crosscutting-amq-cph-dev" : 61617/TCP
+"es-issuance-backend-all-dev" .[thickness=2;#8c14aa].> "es-crosscutting-uam-all-dev" : allow-all
+"es-cross-cutting-all-dev" .[thickness=2;#02869b].> "es-issuance-backend-all-dev" : allow-all
+"es-crosscutting-uam-all-dev" .[thickness=2;#9106ef].> "es-issuance-backend-all-dev" : allow-all
+"es-settlement-backend-all-dev" .[thickness=2;#977d28].> "es-issuance-backend-all-dev" : allow-all
+"digitalapps-ext-megara-cph-dev" .[thickness=2;#8ebf46].> "megara-cph-amq-dev" : 5672/TCP 61616/TCP
+"megara-cph-dev" .[thickness=2;#4ca0d5].> "megara-cph-amq-dev" : 5672/TCP 61616/TCP
+"digitalapps-ext-megara-mil-dev" .[thickness=2;#6a6759].> "megara-mil-amq-dev" : 5672/TCP 61616/TCP 61617/TCP
+"digitalapps-ext-megara-osl-dev" .[thickness=2;#95806b].> "megara-mil-amq-dev" : 5672/TCP 61616/TCP 61617/TCP
+"megara-mil-dev" .[thickness=2;#748e3d].> "megara-mil-amq-dev" : 5672/TCP 61616/TCP 61617/TCP
+"mh-mil-dev" .[thickness=2;#ecbc37].> "megara-mil-amq-dev" : 5672/TCP 61616/TCP 61617/TCP
+"megara-osl-dev" .[thickness=2;#fb2a91].> "megara-osl-amq-dev" : 5672/TCP 61616/TCP
+"megara-pto-dev" .[thickness=2;#64983a].> "megara-pto-amq-dev" : 5672/TCP 61616/TCP 61617/TCP
+"mh-pto-dev" .[thickness=2;#7d2f13].> "megara-pto-amq-dev" : 5672/TCP 61616/TCP 61617/TCP
+"mh-pto-dev" .[thickness=2;#9935bb].> "megara-pto-dev" : 5672/TCP
+"mh-mil-dev" .[thickness=2;#d20652].> "nettingapp-amq-mil-dev" : 5672/TCP 61617/TCP
+"nettingapp-backend-mil-dev" .[thickness=2;#2a7020].> "nettingapp-amq-mil-dev" : 5672/TCP 61617/TCP
+"nettingapp-frontend-mil-dev" .[thickness=2;#fa9822].> "nettingapp-backend-mil-dev" : 8090/TCP
+"pg-psql-client-dev" .[thickness=2;#8fe2ac].> "pg-cross-cutting-apps-cph-dev" : allow-all
+"pg-grafana-dev" .[thickness=2;#5141db].> "pg-cross-cutting-apps-cph-dev" : allow-all
+"pg-psql-client-dev" .[thickness=2;#170d5b].> "pg-cross-cutting-apps-cph-dev" : allow-all
+"pg-psql-client-dev" .[thickness=2;#6e7e8b].> "pg-cross-cutting-iam-cph-dev" : allow-all
+"pg-grafana-dev" .[thickness=2;#ccd9b1].> "pg-cross-cutting-iam-cph-dev" : allow-all
+"pg-psql-client-dev" .[thickness=2;#dabb9e].> "pg-cross-cutting-iam-cph-dev" : allow-all
+"es-crosscutting-uam-all-dev" .[thickness=2;#4d3669].> "pg-cross-cutting-iam-cph-dev" : 5432/TCP
+"pg-psql-client-dev" .[thickness=2;#791bce].> "pg-custody-ca-mil-dev" : allow-all
+"pg-grafana-dev" .[thickness=2;#ba36ab].> "pg-custody-ca-mil-dev" : allow-all
+"pg-psql-client-dev" .[thickness=2;#2a9ff8].> "pg-custody-ca-mil-dev" : allow-all
+"pg-psql-client-dev" .[thickness=2;#0df15f].> "pg-custody-ca-osl-dev" : allow-all
+"pg-grafana-dev" .[thickness=2;#d0c312].> "pg-custody-ca-osl-dev" : allow-all
+"pg-psql-client-dev" .[thickness=2;#df8c48].> "pg-custody-ca-osl-dev" : allow-all
+"pg-psql-client-dev" .[thickness=2;#23d400].> "pg-custody-ca-pto-dev" : allow-all
+"pg-grafana-dev" .[thickness=2;#e36076].> "pg-custody-ca-pto-dev" : allow-all
+"pg-psql-client-dev" .[thickness=2;#5d5142].> "pg-custody-ca-pto-dev" : allow-all
+"pg-psql-client-dev" .[thickness=2;#158073].> "pg-euex-dev" : allow-all
+"ptcs-beapp-mil-dev" .[thickness=2;#15b4c7].> "pg-euex-dev" : allow-all
+"pg-psql-client-dev" .[thickness=2;#85b8a2].> "pg-grafana-dev" : allow-all
+"pg-psql-client-dev" .[thickness=2;#5b8280].> "pg-grafana-dev" : allow-all
+"pg-psql-client-dev" .[thickness=2;#aa3f00].> "pg-internal-dev" : allow-all
+"sso-auth-all-dev" .[thickness=2;#ebfc93].> "pg-internal-dev" : allow-all
+"pg-psql-client-dev" .[thickness=2;#3e862a].> "pg-issuance-cph-dev" : allow-all
+"pg-grafana-dev" .[thickness=2;#7dea98].> "pg-issuance-cph-dev" : allow-all
+"pg-psql-client-dev" .[thickness=2;#784038].> "pg-issuance-cph-dev" : allow-all
+"pg-psql-client-dev" .[thickness=2;#fca4f7].> "pg-issuer-ancillary-mil-dev" : allow-all
+"pg-grafana-dev" .[thickness=2;#cf2f99].> "pg-issuer-ancillary-mil-dev" : allow-all
+"pg-psql-client-dev" .[thickness=2;#b2f565].> "pg-issuer-ancillary-mil-dev" : allow-all
+"pg-psql-client-dev" .[thickness=2;#d89730].> "pg-issuer-phoenix-cph-dev" : allow-all
+"pg-grafana-dev" .[thickness=2;#8db5cb].> "pg-issuer-phoenix-cph-dev" : allow-all
+"pg-psql-client-dev" .[thickness=2;#07e770].> "pg-issuer-phoenix-cph-dev" : allow-all
+"pg-psql-client-dev" .[thickness=2;#142f6d].> "pg-issuer-phoenix-mil-dev" : allow-all
+"pg-grafana-dev" .[thickness=2;#5ed60a].> "pg-issuer-phoenix-mil-dev" : allow-all
+"pg-psql-client-dev" .[thickness=2;#535e6a].> "pg-issuer-phoenix-mil-dev" : allow-all
+"pg-psql-client-dev" .[thickness=2;#c0417a].> "pg-issuer-phoenix-osl-dev" : allow-all
+"pg-grafana-dev" .[thickness=2;#8a660f].> "pg-issuer-phoenix-osl-dev" : allow-all
+"pg-psql-client-dev" .[thickness=2;#9cd47e].> "pg-issuer-phoenix-osl-dev" : allow-all
+"pg-psql-client-dev" .[thickness=2;#3eb7bf].> "pg-issuer-ptcs-mil-dev" : allow-all
+"pg-grafana-dev" .[thickness=2;#3aa8ad].> "pg-issuer-ptcs-mil-dev" : allow-all
+"pg-psql-client-dev" .[thickness=2;#97320e].> "pg-issuer-ptcs-mil-dev" : allow-all
+"pg-psql-client-dev" .[thickness=2;#9a875d].> "pg-issuer-taxreclaim-dev" : allow-all
+"pg-grafana-dev" .[thickness=2;#0462f0].> "pg-issuer-taxreclaim-dev" : allow-all
+"pg-psql-client-dev" .[thickness=2;#e43ef0].> "pg-issuer-taxreclaim-dev" : allow-all
+"pg-psql-client-dev" .[thickness=2;#1e7662].> "pg-messagehub-cph-dev" : allow-all
+"pg-grafana-dev" .[thickness=2;#efdde8].> "pg-messagehub-cph-dev" : allow-all
+"pg-psql-client-dev" .[thickness=2;#e121cd].> "pg-messagehub-cph-dev" : allow-all
+"pg-psql-client-dev" .[thickness=2;#1b803a].> "pg-messagehub-mil-dev" : allow-all
+"pg-grafana-dev" .[thickness=2;#d4887c].> "pg-messagehub-mil-dev" : allow-all
+"pg-psql-client-dev" .[thickness=2;#5e8419].> "pg-messagehub-mil-dev" : allow-all
+"pg-psql-client-dev" .[thickness=2;#bec346].> "pg-messagehub-pto-dev" : allow-all
+"pg-grafana-dev" .[thickness=2;#3596dd].> "pg-messagehub-pto-dev" : allow-all
+"pg-psql-client-dev" .[thickness=2;#6f5688].> "pg-messagehub-pto-dev" : allow-all
+"pg-psql-client-dev" .[thickness=2;#a5b75c].> "pg-settlement-cph-dev" : allow-all
+"pg-grafana-dev" .[thickness=2;#f68f83].> "pg-settlement-cph-dev" : allow-all
+"pg-psql-client-dev" .[thickness=2;#64e6f0].> "pg-settlement-cph-dev" : allow-all
+"es-settlement-backend-all-dev" .[thickness=2;#e53340].> "pg-settlement-cph-dev" : 5432/TCP
+"pg-psql-client-dev" .[thickness=2;#f54d36].> "pg-taxes-dev" : allow-all
+"pg-grafana-dev" .[thickness=2;#5d0473].> "pg-taxes-dev" : allow-all
+"pg-psql-client-dev" .[thickness=2;#b73331].> "pg-taxes-dev" : allow-all
+"pg-psql-client-dev" .[thickness=2;#da3669].> "pg-testhto-dev" : allow-all
+"pg-grafana-dev" .[thickness=2;#a4e1e1].> "pg-testhto-dev" : allow-all
+"pg-psql-client-dev" .[thickness=2;#ee6ce2].> "pg-testhto-dev" : allow-all
+"phoenix-bgo-dev" .[thickness=2;#ef1dc8].> "phoenix-amq-cph-dev" : 5672/TCP 61616/TCP
+"phoenix-cph-dev" .[thickness=2;#089c0b].> "phoenix-amq-cph-dev" : 5672/TCP 61616/TCP
+"phoenix-mil-dev" .[thickness=2;#931eef].> "phoenix-amq-mil-dev" : 5672/TCP 61616/TCP
+"phoenix-osl-dev" .[thickness=2;#99e96d].> "phoenix-amq-osl-dev" : 5672/TCP 61616/TCP
+"phoenix-bgo-dev" .[thickness=2;#17ebcf].> "phoenix-csd-interface-amq-cph-dev" : 5672/TCP 61616/TCP
+"phoenix-cph-dev" .[thickness=2;#907bf5].> "phoenix-csd-interface-amq-cph-dev" : 5672/TCP 61616/TCP
+"phoenix-mil-dev" .[thickness=2;#1d6852].> "phoenix-csd-interface-amq-mil-dev" : 5672/TCP 61616/TCP
+"phoenix-osl-dev" .[thickness=2;#1a23e9].> "phoenix-csd-interface-amq-osl-dev" : 5672/TCP 61616/TCP
+"digitalapps-ext-megara-cph-dev" .[thickness=2;#f39a83].> "postgres" : allow-all
+"digitalapps-ext-megara-mil-dev" .[thickness=2;#02d62a].> "postgres" : allow-all
+"digitalapps-ext-megara-osl-dev" .[thickness=2;#ec4084].> "postgres" : allow-all
+"es-issuance-backend-all-dev" .[thickness=2;#2d5b0d].> "postgres" : allow-all
+"es-issuance-frontend-all-dev" .[thickness=2;#a6c17e].> "postgres" : allow-all
+"es-settlement-backend-all-dev" .[thickness=2;#f2883e].> "postgres" : allow-all
+"es-settlement-frontend-all-dev" .[thickness=2;#b29a9f].> "postgres" : allow-all
+"megara-cph-dev" .[thickness=2;#8afd76].> "postgres" : allow-all
+"megara-mil-dev" .[thickness=2;#abad68].> "postgres" : allow-all
+"megara-osl-dev" .[thickness=2;#568ac7].> "postgres" : allow-all
+"megara-pto-dev" .[thickness=2;#705b8a].> "postgres" : allow-all
+"mh-cph-dev" .[thickness=2;#b8e859].> "postgres" : allow-all
+"mh-data-all-dev" .[thickness=2;#42d2f2].> "postgres" : allow-all
+"mh-mil-dev" .[thickness=2;#031564].> "postgres" : allow-all
+"mh-pto-dev" .[thickness=2;#28b9ae].> "postgres" : allow-all
+"nettingapp-backend-mil-dev" .[thickness=2;#fecf74].> "postgres" : allow-all
+"network-policies-test" .[thickness=2;#727213].> "postgres" : allow-all
+"pg-grafana-dev" .[thickness=2;#963b00].> "postgres" : allow-all
+"pg-psql-client-dev" .[thickness=2;#4e3cc7].> "postgres" : allow-all
+"phoenix-bgo-dev" .[thickness=2;#a09918].> "postgres" : allow-all
+"phoenix-cph-dev" .[thickness=2;#9e3ddc].> "postgres" : allow-all
+"phoenix-mil-dev" .[thickness=2;#ff7751].> "postgres" : allow-all
+"phoenix-osl-dev" .[thickness=2;#4e15be].> "postgres" : allow-all
+"rh-sso" .[thickness=2;#c9d258].> "postgres" : allow-all
+"sso" .[thickness=2;#c25d4f].> "postgres" : allow-all
+"sso-auth-all-dev" .[thickness=2;#13c1c3].> "postgres" : allow-all
+"taxreclaim-cph-dev" .[thickness=2;#ada0ab].> "postgres" : allow-all
+"mh-mil-dev" .[thickness=2;#0a0cb9].> "ptcs-amq-mil-dev" : 5672/TCP 61616/TCP 61617/TCP
+"ptcs-beapp-mil-dev" .[thickness=2;#1f5e13].> "ptcs-amq-mil-dev" : 5672/TCP 61616/TCP 61617/TCP
+"ptcs-db-mil-dev" .[thickness=2;#a8493e].> "ptcs-amq-mil-dev" : 5672/TCP 61616/TCP 61617/TCP
+"3scale-apicast-ingress-ext" .[thickness=2;#856164].> "ptcs-beapp-mil-dev" : allow-all
+"3scale-apicast-ingress-int" .[thickness=2;#5d37f1].> "ptcs-beapp-mil-dev" : allow-all
+"ptcs-extfe-mil-dev" .[thickness=2;#5efa01].> "ptcs-beapp-mil-dev" : 8080/TCP
 @enduml

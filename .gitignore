@@ -2,3 +2,6 @@ tmp/*
 kubeseal
 /*.yaml
 /*.yml
+target/
+*.jar
+*.puml

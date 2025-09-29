@@ -1,0 +1,9 @@
+@startuml
+package "apibdg-amq-all-dev" {
+  artifact "amq"
+}
+package "dims-amq-all-dev" {
+  artifact "dims-metrics-exporter"
+}
+"apibdg-amq-all-dev" ..> "dims-amq-all-dev" : 5672/TCP 61617/TCP
+@enduml

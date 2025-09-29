@@ -1,5 +1,6 @@
 package com.euronext.devops.DeploymentDiagramGenerator;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import com.fasterxml.jackson.annotation.*;
@@ -15,8 +16,8 @@ import java.util.*;
 @SpringBootApplication
 public class DeploymentDiagramGeneratorPlantumlApplication {
 
-	public static void main(String[] args) {
-		SpringApplication.run(DeploymentDiagramGeneratorPlantumlApplication.class, args);
+	public static void main(String[] args) throws IOException {
+//		SpringApplication.run(DeploymentDiagramGeneratorPlantumlApplication.class, args);
 		if (args.length != 2) {
 				System.out.println("Usage: java DeploymentDiagramGenerator <input.json> <output.puml>");
 				return;
@@ -45,7 +46,7 @@ public class DeploymentDiagramGeneratorPlantumlApplication {
 							List<Map<String, String>> selectors = rule.getNamespaceSelectors();
 							for (Map<String, String> selector : selectors) {
 								for (Namespace other : root.namespaces) {
-									if (matchesSelector(other.labels, selector) && !other.name.equals(ns.name)) {
+									if (!other.name.equals(ns.name) && matchesSelector(other.labels, selector)) {
 										String label = (rule.ports == null || rule.ports.isEmpty())
 												? "allow-all"
 												: rule.getPortsString();
@@ -64,14 +65,15 @@ public class DeploymentDiagramGeneratorPlantumlApplication {
     }
 
     // Helper to match selector against namespace labels
-    private static boolean matchesSelector(Map<String, String> labels, Map<String, String> selector) {
-        for (Map.Entry<String, String> entry : selector.entrySet()) {
-            if (!labels.containsKey(entry.getKey()) || !labels.get(entry.getKey()).equals(entry.getValue())) {
-                return false;
+    private static boolean matchesSelector(Map<String, String> namespaceLabels, Map<String, String> networkPolocySelector) {
+        for (Map.Entry<String, String> selector : networkPolocySelector.entrySet()) {
+            if (namespaceLabels.containsKey(selector.getKey()) &&
+                    namespaceLabels.get(selector.getKey()).equals(selector.getValue())) {
+                return true;
             }
         }
-        return true;
-    }	
+        return false;
+    }
 	}
 
 

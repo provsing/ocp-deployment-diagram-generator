@@ -15,7 +15,8 @@
         "pod-security.kubernetes.io/audit": "baseline",
         "pod-security.kubernetes.io/audit-version": "v1.24",
         "pod-security.kubernetes.io/warn": "baseline",
-        "pod-security.kubernetes.io/warn-version": "v1.24"
+        "pod-security.kubernetes.io/warn-version": "v1.24",
+        "network-policy-dims-amq-allow": "accept"
       },
       "networkpolicies": {
         "name": "default",
@@ -73,16 +74,17 @@
       }
     },
     {
-      "name": "apibdg-amq-all-dev",
+      "name": "dims-amq-all-dev",
       "labels": {
-        "app.kubernetes.io/instance": "apibdg-amq-all-dev-ns",
+        "app.kubernetes.io/instance": "dims-amq-all-dev-ns",
         "argocd.argoproj.io/managed-by": "openshift-gitops",
         "assignment-group": "ES-Message-Team",
         "ingresscontroller": "internal",
-        "kubernetes.io/metadata.name": "apibdg-amq-all-dev",
+        "kubernetes.io/metadata.name": "dims-amq-all-dev",
         "ocp-project-group": "ocp-project-apibdg-all",
         "ocp-project-type": "application",
         "openshift-pipelines.tekton.dev/namespace-reconcile-version": "1.15.3",
+        "network-policy-dims-amq-all-dev": "accept",
         "operator.tekton.dev/enable-annotation": "enabled",
         "pod-security.kubernetes.io/audit": "baseline",
         "pod-security.kubernetes.io/audit-version": "v1.24",
@@ -97,7 +99,7 @@
               {
                 "namespaceSelector": {
                   "matchLabels": {
-                    "kubernetes.io/metadata.name": "apibdg-amq-all-dev"
+                    "kubernetes.io/metadata.name": "dims-amq-all-dev"
                   }
                 }
               },
@@ -122,7 +124,7 @@
               {
                 "namespaceSelector": {
                   "matchLabels": {
-                    "network-policy-apibdg-amq-allow": "accept"
+                    "network-policy-dims-amq-allow": "accept"
                   }
                 }
               }
@@ -141,7 +143,7 @@
         ]
       },
       "deployments": {
-        "name": "amq-metrics-exporter"
+        "name": "dims-metrics-exporter"
       }
     }
   ]

@@ -8,4 +8,9 @@ import java.util.*;
 @JsonIgnoreProperties(ignoreUnknown = true)
 class Deployment {
     public String name;
+    public String namespace;
+
+    public String toPlantUMLPackage() {             
+        return String.format(" artifact \"%s\"", name ).toString();
+    }    
 }

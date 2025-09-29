@@ -12,20 +12,24 @@ import java.util.*;
 class Namespace {
     public String name;
     public Map<String, String> labels;
-    public NetworkPolicies networkpolicies;
-    public Deployment deployments;
+    public List<NetworkPolicies> networkpolicies = new ArrayList<>();
+    public List<Deployment> deployments = new ArrayList<>();
 
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
         sb.append("Namespace {\n");
         sb.append("  name: ").append(name).append("\n");
-        sb.append("  deployment: ").append(deployments != null ? deployments.name : null).append("\n");
+        for (Deployment dep : deployments){
+            sb.append("  deployment: ").append(dep.name).append("\n");
+        }        
         sb.append("  labels: ").append(labels).append("\n");
         sb.append("  networkPolicies:\n");
-        if (networkpolicies != null && networkpolicies.ingress != null) {
-            for (IngressRule rule : networkpolicies.ingress) {
-                sb.append("    ").append(rule).append("\n");
+        for (NetworkPolicies networkpolicy : networkpolicies){
+            if (networkpolicies != null && networkpolicy.ingress != null) {
+                for (IngressRule rule : networkpolicy.ingress) {
+                    sb.append("    ").append(rule).append("\n");
+                }
             }
         }
         sb.append("}");
@@ -33,6 +37,14 @@ class Namespace {
     }
 
     public String toPlantUMLPackage() {
-        return String.format("package \"%s\" {\n  artifact \"%s\"\n}", name, deployments != null ? deployments.name : "");
+        StringBuilder sb = new StringBuilder();
+        sb.append("package \"").append(name).append("\" {");                
+        for (Deployment dep : deployments) {
+            String artifact = String.format("\n  artifact \"%s\"", dep.name );
+            sb.append(artifact);
+        }
+        sb.append("\n}");
+        
+        return sb.toString();
     }
 }

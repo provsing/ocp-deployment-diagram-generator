@@ -8,8 +8,5 @@ import java.util.*;
 public class NetworkPolicies {
     public String name;
     public List<IngressRule> ingress;
+    public String namespace; 
 }
-
-
-
-

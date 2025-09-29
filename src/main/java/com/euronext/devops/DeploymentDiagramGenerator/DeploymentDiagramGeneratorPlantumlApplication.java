@@ -31,6 +31,8 @@ public class DeploymentDiagramGeneratorPlantumlApplication {
 				System.out.println(ns);
 			}
 
+			Random random = new Random();
+
 			try (PrintWriter out = new PrintWriter(args[1])) {
 				out.println("@startuml");
 
@@ -41,16 +43,19 @@ public class DeploymentDiagramGeneratorPlantumlApplication {
 
 				// Output relationships
 				for (Namespace ns : root.namespaces) {
-					if (ns.networkpolicies != null && ns.networkpolicies.ingress != null) {
-						for (IngressRule rule : ns.networkpolicies.ingress) {
-							List<Map<String, String>> selectors = rule.getNamespaceSelectors();
-							for (Map<String, String> selector : selectors) {
-								for (Namespace other : root.namespaces) {
-									if (!other.name.equals(ns.name) && matchesSelector(other.labels, selector)) {
-										String label = (rule.ports == null || rule.ports.isEmpty())
-												? "allow-all"
-												: rule.getPortsString();
-										out.printf("\"%s\" ..> \"%s\" : %s%n", other.name, ns.name, label);
+					for (NetworkPolicies np : ns.networkpolicies) {
+						if ( np.ingress != null) {
+							for (IngressRule rule : np.ingress) {
+								List<Map<String, String>> selectors = rule.getNamespaceSelectors();
+								for (Map<String, String> selector : selectors) {
+									for (Namespace other : root.namespaces) {
+										if (!other.name.equals(ns.name) && matchesSelector(other.labels, selector)) {
+											String label = (rule.ports == null || rule.ports.isEmpty())
+													? "allow-all"
+													: rule.getPortsString();
+											String color = String.format("#%06x", random.nextInt(0xFFFFFF + 1));				
+											out.printf("\"%s\" .[thickness=2;%s].> \"%s\" : %s%n", other.name, color, ns.name, label);
+										}
 									}
 								}
 							}

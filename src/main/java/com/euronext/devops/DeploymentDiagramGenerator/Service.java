@@ -35,20 +35,25 @@ public class Service {
     public String portInfo(){
         StringBuilder sb = new StringBuilder();
         for (Port port : ports){
-            sb.append(port.toPlantUML()).append(" ");
+            sb.append(port.toPlantUML()).append("\\n");
         }
         
         return sb.toString();        
     }
     public List<Deployment> selectDeployments(List<Deployment> targets){        
         List<Deployment> hits = new ArrayList<>();
+        boolean matchFound = false;
 
         for (Deployment dep : targets){            
             if (DeploymentDiagramGeneratorPlantumlApplication.matchesSelector(dep.labels, selector) ){
                 hits.add(dep);
-            }            
-        }        
+            }
+        }    
+        
+            
         return hits;
     }
+
+    
     
 }

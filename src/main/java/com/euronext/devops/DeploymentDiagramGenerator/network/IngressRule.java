@@ -27,7 +27,7 @@ public class IngressRule {
         if (ports == null || ports.isEmpty()) return "";
         StringBuilder sb = new StringBuilder();
         for (PortRule pr : ports) {
-            sb.append(pr.port).append("/").append(pr.protocol).append(" ");
+            sb.append(pr.port).append("/").append(pr.protocol).append("\\n");
         }
         return sb.toString().trim();
     }

@@ -29,10 +29,10 @@ public class Port {
 
     public String toPlantUML() {
         StringBuilder sb = new StringBuilder();        
-        sb.append("Name: ").append(name)
-        .append(" Port: ").append(port)
-        .append(" protocol: ").append(protocol)
-        .append(" targetPort: ").append(targetPort);
+        sb.append("\\nName: ").append(name)
+        .append("\\nPort: ").append(port)
+        .append("\\nprotocol: ").append(protocol)
+        .append("\\ntargetPort: ").append(targetPort);        
         return sb.toString();
     }
 }

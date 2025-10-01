@@ -2,9 +2,6 @@ package com.euronext.devops.DeploymentDiagramGenerator;
 
 import com.fasterxml.jackson.annotation.*;
 
-import com.euronext.devops.DeploymentDiagramGenerator.network.*;
-import java.io.*;
-import java.nio.file.*;
 import java.util.*;
 
 // Namespace object
@@ -12,7 +9,7 @@ import java.util.*;
 public class Service {
     public String name;
     public String namespace;
-    public Map<String, String> selectors = new HashMap<>();
+    public Map<String, String> selector = new HashMap<>();
     public List<Port> ports = new ArrayList<>();    
 
     @Override
@@ -25,7 +22,7 @@ public class Service {
             sb.append("  ports: ").append(port.name).append("\n");
         }                
         sb.append("  selectors:\n");
-                    sb.append("    ").append(selectors.toString()).append("\n");
+                    sb.append("    ").append(selector.toString()).append("\n");
         sb.append("}");
         return sb.toString();
     }
@@ -47,7 +44,7 @@ public class Service {
         List<Deployment> hits = new ArrayList<>();
 
         for (Deployment dep : targets){            
-            if (DeploymentDiagramGeneratorPlantumlApplication.matchesSelector(dep.labels,selectors) ){
+            if (DeploymentDiagramGeneratorPlantumlApplication.matchesSelector(dep.labels, selector) ){
                 hits.add(dep);
             }            
         }        

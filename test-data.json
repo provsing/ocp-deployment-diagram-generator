@@ -7,7 +7,7 @@
         "argocd.argoproj.io/managed-by": "something",        
         "kubernetes.io/metadata.name": "my-namespace-ding-dong",
         "network-policy-bims-tech-allow": "accept",
-        "network-policy-csd-tech-allow": "accept",
+        "network-policy-csd-tech-allow": "accept"
       },
       "networkpolicies": [
         {
@@ -75,6 +75,6 @@
         }
       ]
     }
-    ]
+  ]
 }
 

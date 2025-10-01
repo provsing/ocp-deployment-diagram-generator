@@ -9,11 +9,12 @@ import java.util.*;
 
 // Namespace object
 @JsonIgnoreProperties(ignoreUnknown = true)
-class Namespace {
+public class Namespace {
     public String name;
     public Map<String, String> labels;
     public List<NetworkPolicies> networkpolicies = new ArrayList<>();
     public List<Deployment> deployments = new ArrayList<>();
+    public List<Service> services = new ArrayList<>();
 
     @Override
     public String toString() {
@@ -40,9 +41,14 @@ class Namespace {
         StringBuilder sb = new StringBuilder();
         sb.append("package \"").append(name).append("\" {");                
         for (Deployment dep : deployments) {
-            String artifact = String.format("\n  artifact \"%s\"", dep.name );
-            sb.append(artifact);
+            String artifact = dep.toPlantUML();
+            sb.append("\n").append(artifact);
         }
+        for (Service service : services) {
+            String artifact = service.toPlantUML();
+            sb.append("\n").append(artifact);
+        }
+
         sb.append("\n}");
         
         return sb.toString();

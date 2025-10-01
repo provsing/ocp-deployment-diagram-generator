@@ -43,6 +43,12 @@ public class DeploymentDiagramGeneratorPlantumlApplication {
 
 				// Output relationships
 				for (Namespace ns : root.namespaces) {
+					String color = String.format("#%06x", random.nextInt(0xFFFFFF + 1));									
+					for (Service svc : ns.services) {
+						for (Deployment dep : svc.selectDeployments(ns.deployments)){
+							out.printf("\"%s-svc\" .[thickness=2;%s].> \"%s\" : %s%n", svc.name, color,dep.name, svc.portInfo());
+						}						
+						}									
 					for (NetworkPolicies np : ns.networkpolicies) {
 						if ( np.ingress != null) {
 							for (IngressRule rule : np.ingress) {
@@ -53,7 +59,6 @@ public class DeploymentDiagramGeneratorPlantumlApplication {
 											String label = (rule.ports == null || rule.ports.isEmpty())
 													? "allow-all"
 													: rule.getPortsString();
-											String color = String.format("#%06x", random.nextInt(0xFFFFFF + 1));				
 											out.printf("\"%s\" .[thickness=2;%s].> \"%s\" : %s%n", other.name, color, ns.name, label);
 										}
 									}
@@ -70,7 +75,7 @@ public class DeploymentDiagramGeneratorPlantumlApplication {
     }
 
     // Helper to match selector against namespace labels
-    private static boolean matchesSelector(Map<String, String> namespaceLabels, Map<String, String> networkPolocySelector) {
+    public static boolean matchesSelector(Map<String, String> namespaceLabels, Map<String, String> networkPolocySelector) {
         for (Map.Entry<String, String> selector : networkPolocySelector.entrySet()) {
             if (namespaceLabels.containsKey(selector.getKey()) &&
                     namespaceLabels.get(selector.getKey()).equals(selector.getValue())) {

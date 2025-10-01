@@ -9,8 +9,9 @@ import java.util.*;
 class Deployment {
     public String name;
     public String namespace;
+    public Map<String, String> labels;
 
-    public String toPlantUMLPackage() {             
+    public String toPlantUML() {             
         return String.format(" artifact \"%s\"", name ).toString();
     }    
 }

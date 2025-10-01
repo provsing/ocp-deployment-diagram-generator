@@ -12,11 +12,13 @@ import java.util.*;
 public class Namespace {
     public String name;
     public Map<String, String> labels;
-    public List<NetworkPolicies> networkpolicies = new ArrayList<>();
+    public List<NetworkPolicy> networkpolicies = new ArrayList<>();
     public List<Deployment> deployments = new ArrayList<>();
     public List<Service> services = new ArrayList<>();    
-    public String color = String.format("#%06x", random.nextInt(0xFFFFFF + 1));
+    public List<Route> routes = new ArrayList<>();
+    public String color = String.format("#%06x", random.nextInt(0xFFFFFF + 1));    
     private static Random random = new Random();
+
 
     @Override
     public String toString() {
@@ -28,7 +30,7 @@ public class Namespace {
         }        
         sb.append("  labels: ").append(labels).append("\n");
         sb.append("  networkPolicies:\n");
-        for (NetworkPolicies networkpolicy : networkpolicies){
+        for (NetworkPolicy networkpolicy : networkpolicies){
             if (networkpolicies != null && networkpolicy.ingress != null) {
                 for (IngressRule rule : networkpolicy.ingress) {
                     sb.append("    ").append(rule).append("\n");
@@ -46,13 +48,21 @@ public class Namespace {
             String artifact = dep.toPlantUML();
             sb.append("\n").append(artifact);
         }
-        for (Service service : services) {
-            String artifact = service.toPlantUML();
-            sb.append("\n").append(artifact);
+
+        for (Route route : routes) {            
+            sb.append("\n").append(route.toPlantUML());
         }
+
+        for (Service service : services) {            
+            sb.append("\n").append(service.toPlantUML());
+        }
+
 
         sb.append("\n}");
         
         return sb.toString();
     }
+    public String getEscapedName(){
+        return name.replaceAll("-","_");
+    }    
 }

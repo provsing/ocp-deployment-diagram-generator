@@ -14,10 +14,13 @@ public class Service {
 
     @Override
     public String toString() {
+        if(ports == null )
+            ports = new ArrayList<>();
         StringBuilder sb = new StringBuilder();
         sb.append("Service {\n");
         sb.append("  name: ").append(name).append("\n");
-        sb.append("  namespace: ").append(name).append("\n");
+        sb.append("  namespace: ").append(name).append("\n");        
+
         for (Port port : ports){
             sb.append("  ports: ").append(port.name).append("\n");
         }                
@@ -34,6 +37,9 @@ public class Service {
     }
     public String portInfo(){
         StringBuilder sb = new StringBuilder();
+        if(ports == null )
+            return "Allow-all";
+
         for (Port port : ports){
             sb.append(port.toPlantUML()).append("\\n");
         }

@@ -1,7 +1,7 @@
 #!/bin/bash
 
 
-routes_json=$(oc get route -A -o json | jq '[.items[] | { name: .metadata.name, namespace: .metadata.namespace, host: .spec.host, subdomain: .spec.subdomain, path: .spec.path, toService: .spec.to.name }]')
+routes_json=$(oc get route -A -o json | jq '[.items[] | { name: .metadata.name, namespace: .metadata.namespace, host: .spec.host, subdomain: .spec.subdomain, path: .spec.path, toService: .spec.to.name, targetPort: .spec.port.targetPort }]')
 echo $routes_json > routes.json
 
 services_json=$(oc get services -A -o json | jq '[.items[] | { name: .metadata.name, namespace: .metadata.namespace, ports: .spec.ports, selector: .spec.selector }]')
@@ -12,7 +12,7 @@ namespaces_json=$(oc get namespace -o json | jq '[  .items[] |
     select( 
             (
                 (.metadata.name | test("^es-.*-all-.*") ) or 
-                (.metadata.name | test("^pg-.*") ) 
+                (.metadata.name | test("^pg-.*") ) or (.metadata.name | test("^postgres*") )
             )   and 
                 ( (.metadata.name | test("^pg-psql-.*") | not) and 
                   (.metadata.name | test("^pg-grafana.*") | not ) and 

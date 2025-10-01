@@ -57,22 +57,39 @@ public class DeploymentDiagramGeneratorPlantumlApplication {
 	private static void printRelationsships(List<Namespace> namespaces, PrintWriter out){
 		for (Namespace ns : namespaces) {
 			
+			
+				
+					
+
+
 			for (Service svc : ns.services) {
+				
 				for (Deployment dep : svc.selectDeployments(ns.deployments)){
 					out.printf("\"%s-svc\" .[thickness=2;%s].> \"%s\" : %s%n", svc.name, ns.color,dep.name, svc.portInfo());
+					for (Route route : ns.routes){
+						if(svc.name.equals(route.toService)){
+							out.printf("\"%s_route_%s\" .[thickness=2;%s].> \"%s-svc\" %n", route.getEscapedName(), route.id ,ns.color,svc.name);
+						}
+					}
 				}						
 			}									
-			for (NetworkPolicies np : ns.networkpolicies) {
+			Map<String,NetworkPolicy> maps = new HashMap<>();
+			for (NetworkPolicy np : ns.networkpolicies) {
 				if ( np.ingress != null) {
 					for (IngressRule rule : np.ingress) {
 						List<Map<String, String>> selectors = rule.getNamespaceSelectors();
 						for (Map<String, String> selector : selectors) {
 							for (Namespace other : namespaces) {
 								if (!other.name.equals(ns.name) && matchesSelector(other.labels, selector)) {
-									String label = (rule.ports == null || rule.ports.isEmpty())
-											? "allow-all"
-											: rule.getPortsString();
-									out.printf("\"%s\" .[thickness=2;%s].> \"%s\" : name: %s \\nrule:%s%n", other.name, ns.color, ns.name, np.name,label);
+									String npRefName = String.format("np_%s_%s",np.namespace.replaceAll("-","_"),rule.id);
+									if ( !maps.containsKey(npRefName) ){
+										maps.put(npRefName,np);
+										out.printf(np.toPlantUML(rule));
+									}
+										
+									
+									out.printf("\"%s\" .[thickness=2;%s].> \"%s\" %n", other.name, other.color, npRefName);
+									out.printf("\"%s\" .[thickness=2;%s].> \"%s\" %n", npRefName, other.color, ns.name);
 								}
 							}
 						}
@@ -86,6 +103,9 @@ public class DeploymentDiagramGeneratorPlantumlApplication {
     // Helper to match selector against namespace labels
     public static boolean matchesSelector(Map<String, String> labels, Map<String, String> selectors) {        
 		int numberOfmatches = 0;
+		if ( selectors == null || labels == null )
+			return false;
+		
 		for (Map.Entry<String, String> selector : selectors.entrySet()) {
             if (labels.containsKey(selector.getKey()) &&
                     labels.get(selector.getKey()).equals(selector.getValue())) {

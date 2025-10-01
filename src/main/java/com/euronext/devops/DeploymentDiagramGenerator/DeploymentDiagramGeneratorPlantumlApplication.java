@@ -31,48 +31,57 @@ public class DeploymentDiagramGeneratorPlantumlApplication {
 				System.out.println(ns);
 			}
 
-			Random random = new Random();
+			
 
 			try (PrintWriter out = new PrintWriter(args[1])) {
-				out.println("@startuml");
+				out.println("@startuml");				
 
-				// Output packages and artifacts
-				for (Namespace ns : root.namespaces) {
-					out.println(ns.toPlantUMLPackage());
-				}
+				printPackagesAndArtifacts(root.namespaces,out);
 
-				// Output relationships
-				for (Namespace ns : root.namespaces) {
-					String color = String.format("#%06x", random.nextInt(0xFFFFFF + 1));									
-					for (Service svc : ns.services) {
-						for (Deployment dep : svc.selectDeployments(ns.deployments)){
-							out.printf("\"%s-svc\" .[thickness=2;%s].> \"%s\" : %s%n", svc.name, color,dep.name, svc.portInfo());
-						}						
-					}									
-					for (NetworkPolicies np : ns.networkpolicies) {
-						if ( np.ingress != null) {
-							for (IngressRule rule : np.ingress) {
-								List<Map<String, String>> selectors = rule.getNamespaceSelectors();
-								for (Map<String, String> selector : selectors) {
-									for (Namespace other : root.namespaces) {
-										if (!other.name.equals(ns.name) && matchesSelector(other.labels, selector)) {
-											String label = (rule.ports == null || rule.ports.isEmpty())
-													? "allow-all"
-													: rule.getPortsString();
-											out.printf("\"%s\" .[thickness=2;%s].> \"%s\" : name: %s \\nrule:%s%n", other.name, color, ns.name, np.name,label);
-										}
-									}
-								}
-							}
-						}
-					}
-				}
+				printRelationsships(root.namespaces,out);
 
 				out.println("@enduml");
 			}
 
         System.out.println("PlantUML deployment diagram generated in " + args[1]);
     }
+
+
+	private static void printPackagesAndArtifacts(List<Namespace> namespaces, PrintWriter out){
+		// Output packages and artifacts
+		for (Namespace ns : namespaces) {
+			out.println(ns.toPlantUMLPackage());
+		}		
+	}
+
+	private static void printRelationsships(List<Namespace> namespaces, PrintWriter out){
+		for (Namespace ns : namespaces) {
+			
+			for (Service svc : ns.services) {
+				for (Deployment dep : svc.selectDeployments(ns.deployments)){
+					out.printf("\"%s-svc\" .[thickness=2;%s].> \"%s\" : %s%n", svc.name, ns.color,dep.name, svc.portInfo());
+				}						
+			}									
+			for (NetworkPolicies np : ns.networkpolicies) {
+				if ( np.ingress != null) {
+					for (IngressRule rule : np.ingress) {
+						List<Map<String, String>> selectors = rule.getNamespaceSelectors();
+						for (Map<String, String> selector : selectors) {
+							for (Namespace other : namespaces) {
+								if (!other.name.equals(ns.name) && matchesSelector(other.labels, selector)) {
+									String label = (rule.ports == null || rule.ports.isEmpty())
+											? "allow-all"
+											: rule.getPortsString();
+									out.printf("\"%s\" .[thickness=2;%s].> \"%s\" : name: %s \\nrule:%s%n", other.name, ns.color, ns.name, np.name,label);
+								}
+							}
+						}
+					}
+				}
+			}
+		}
+
+	}
 
     // Helper to match selector against namespace labels
     public static boolean matchesSelector(Map<String, String> labels, Map<String, String> selectors) {        

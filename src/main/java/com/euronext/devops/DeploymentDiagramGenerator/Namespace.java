@@ -14,7 +14,9 @@ public class Namespace {
     public Map<String, String> labels;
     public List<NetworkPolicies> networkpolicies = new ArrayList<>();
     public List<Deployment> deployments = new ArrayList<>();
-    public List<Service> services = new ArrayList<>();
+    public List<Service> services = new ArrayList<>();    
+    public String color = String.format("#%06x", random.nextInt(0xFFFFFF + 1));
+    private static Random random = new Random();
 
     @Override
     public String toString() {
@@ -39,7 +41,7 @@ public class Namespace {
 
     public String toPlantUMLPackage() {
         StringBuilder sb = new StringBuilder();
-        sb.append("package \"").append(name).append("\" {");                
+        sb.append("package \"").append(name).append("\"").append(String.format(" %s {",color));                
         for (Deployment dep : deployments) {
             String artifact = dep.toPlantUML();
             sb.append("\n").append(artifact);

@@ -1,0 +1,80 @@
+{
+  "namespaces": [
+    {
+      "name": "my-namespace-ding-dong",
+      "labels": {
+        "app.kubernetes.io/instance": "my-namespace-ding-dong",
+        "argocd.argoproj.io/managed-by": "something",        
+        "kubernetes.io/metadata.name": "my-namespace-ding-dong",
+        "network-policy-bims-tech-allow": "accept",
+        "network-policy-csd-tech-allow": "accept",
+      },
+      "networkpolicies": [
+        {
+          "name": "default",
+          "namespace": "my-namespace-ding-dong",
+          "ingress": [
+            {
+              "from": [
+                {
+                  "namespaceSelector": {
+                    "matchLabels": {
+                      "kubernetes.io/metadata.name": "my-namespace-ding-dong"
+                    }
+                  }
+                },
+                {
+                  "namespaceSelector": {
+                    "matchLabels": {
+                      "network.openshift.io/policy-group": "ingress"
+                    }
+                  }
+                },
+                {
+                  "namespaceSelector": {
+                    "matchLabels": {
+                      "network.openshift.io/policy-group": "monitoring"
+                    }
+                  }
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "deployments": [
+        {
+          "name": "my-app",
+          "namespace": "my-namespace-ding-dong",
+          "labels": {
+            "app.kubernetes.io/instance": "my-app",
+            "app.kubernetes.io/managed-by": "Helm",
+            "app.kubernetes.io/name": "my-app",
+            "app.kubernetes.io/version": "1.0.0-511e8f4f",
+            "helm.sh/chart": "my-app-1.0.0-511e8f4f"
+          }
+        }
+      ],
+      "routes": [],
+      "services": [
+        {
+          "name": "my-app",
+          "namespace": "my-namespace-ding-dong",
+          "ports": [
+            {
+              "name": "http",
+              "port": 8080,
+              "protocol": "TCP",
+              "targetPort": "http"
+            }
+          ],
+          "selector": {
+            "app.kubernetes.io/instance": "my-app",
+            "app.kubernetes.io/name": "my-app"
+          }
+        }
+      ]
+    }
+    ]
+}
+

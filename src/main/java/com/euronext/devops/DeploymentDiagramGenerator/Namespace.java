@@ -18,7 +18,16 @@ public class Namespace {
     public List<Route> routes = new ArrayList<>();
     public String color = String.format("#%06x", random.nextInt(0xFFFFFF + 1));    
     private static Random random = new Random();
+    public int id;
+    private static int nextId = 0;
 
+    public Namespace(){
+        id = Namespace.nextId();
+    }
+
+    private synchronized static int nextId(){
+        return nextId++;
+    }    
 
     @Override
     public String toString() {
@@ -43,7 +52,7 @@ public class Namespace {
 
     public String toPlantUMLPackage() {
         StringBuilder sb = new StringBuilder();
-        sb.append("package \"").append(name).append("\"").append(String.format(" %s {",color));                
+        sb.append("package \"").append(String.format("%s_%s",name,id)).append("\"").append(String.format(" %s {",color));                
         for (Deployment dep : deployments) {
             String artifact = dep.toPlantUML();
             sb.append("\n").append(artifact);

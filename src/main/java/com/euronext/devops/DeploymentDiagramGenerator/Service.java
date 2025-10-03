@@ -11,6 +11,16 @@ public class Service {
     public String namespace;
     public Map<String, String> selector = new HashMap<>();
     public List<Port> ports = new ArrayList<>();    
+    public int id;
+    private static int nextId = 0;
+
+    public Service(){
+        id = Service.nextId();
+    }
+
+    private synchronized static int nextId(){
+        return nextId++;
+    }    
 
     @Override
     public String toString() {
@@ -32,7 +42,7 @@ public class Service {
 
     public String toPlantUML() {
         StringBuilder sb = new StringBuilder();
-        sb.append(" interface ").append(String.format("\"%s-svc\"", name ));
+        sb.append(" interface ").append(String.format("\"%s_%s-svc\"", name,id ));
         return sb.toString();
     }
     public String portInfo(){
@@ -51,7 +61,7 @@ public class Service {
         boolean matchFound = false;
 
         for (Deployment dep : targets){            
-            if (DeploymentDiagramGeneratorPlantumlApplication.matchesSelector(dep.labels, selector) ){
+            if (DeploymentDiagramGeneratorPlantumlApplication.matchesSelector(dep.getLabels(), selector) ){
                 hits.add(dep);
             }
         }    

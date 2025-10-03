@@ -12,6 +12,7 @@ public class Route {
     public String path;
     public String toService;
     public String targetPort;
+    public String tlsTermination; 
     public int id;
     private static int nextId = 0;
 
@@ -19,7 +20,7 @@ public class Route {
         id = Route.nextId();
     }
 
-    private static int nextId(){
+    private synchronized static int nextId(){
         return nextId++;
     }
 
@@ -32,6 +33,7 @@ public class Route {
             .append("  subdomain").append(" => ").append(String.format("\"%s\"",subdomain)).append("\n")
             .append("  path").append(" => ").append(String.format("\"%s\"",path)).append("\n")
             .append("  targetPort").append(" => ").append(String.format("\"%s\"",targetPort)).append("\n")
+            .append("  tlsTermination").append(" => ").append(String.format("\"%s\"",tlsTermination)).append("\n")
             .append("}")
             ;
         

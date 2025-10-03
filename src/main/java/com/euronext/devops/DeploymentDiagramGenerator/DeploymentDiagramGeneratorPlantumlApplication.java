@@ -56,19 +56,20 @@ public class DeploymentDiagramGeneratorPlantumlApplication {
 
 	private static void printRelationsships(List<Namespace> namespaces, PrintWriter out){
 		for (Namespace ns : namespaces) {
-			
-			
-				
-					
-
 
 			for (Service svc : ns.services) {
 				
 				for (Deployment dep : svc.selectDeployments(ns.deployments)){
-					out.printf("\"%s-svc\" .[thickness=2;%s].> \"%s\" : %s%n", svc.name, ns.color,dep.name, svc.portInfo());
+					out.printf("\"%s_%s-svc\" .[thickness=2;%s].> \"%s_%s\" : %s%n", svc.name,svc.id, ns.color,dep.name,dep.id, svc.portInfo());
 					for (Route route : ns.routes){
 						if(svc.name.equals(route.toService)){
-							out.printf("\"%s_route_%s\" .[thickness=2;%s].> \"%s-svc\" %n", route.getEscapedName(), route.id ,ns.color,svc.name);
+							String info = "";
+							if ( route.tlsTermination != null && !route.tlsTermination.equals("reencrypt") ){
+								info = String.format("#line:red;line.bold;text:red :\"NO ENCRYPTION\"");								
+							}
+
+							out.printf("\"%s_route_%s\" .[thickness=2;%s].> \"%s_%s-svc\" %s%n", route.getEscapedName(), route.id ,ns.color,svc.name,svc.id,info);
+							
 						}
 					}
 				}						
@@ -88,8 +89,8 @@ public class DeploymentDiagramGeneratorPlantumlApplication {
 									}
 										
 									
-									out.printf("\"%s\" .[thickness=2;%s].> \"%s\" %n", other.name, other.color, npRefName);
-									out.printf("\"%s\" .[thickness=2;%s].> \"%s\" %n", npRefName, other.color, ns.name);
+									out.printf("\"%s_%s\" .[thickness=2;%s].> \"%s\" %n", other.name,other.id, other.color, npRefName);
+									out.printf("\"%s\" .[thickness=2;%s].> \"%s_%s\" %n", npRefName, other.color, ns.name,ns.id);
 								}
 							}
 						}

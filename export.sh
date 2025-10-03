@@ -1,7 +1,7 @@
 #!/bin/bash
 
 
-routes_json=$(oc get route -A -o json | jq '[.items[] | { name: .metadata.name, namespace: .metadata.namespace, host: .spec.host, subdomain: .spec.subdomain, path: .spec.path, toService: .spec.to.name, targetPort: .spec.port.targetPort }]')
+routes_json=$(oc get route -A -o json | jq '[.items[] | { name: .metadata.name, namespace: .metadata.namespace, host: .spec.host, subdomain: .spec.subdomain, path: .spec.path, toService: .spec.to.name, targetPort: .spec.port.targetPort, tlsTermination: .spec.tls.termination }]')
 echo $routes_json > routes.json
 
 services_json=$(oc get services -A -o json | jq '[.items[] | { name: .metadata.name, namespace: .metadata.namespace, ports: .spec.ports, selector: .spec.selector }]')
@@ -12,7 +12,9 @@ namespaces_json=$(oc get namespace -o json | jq '[  .items[] |
     select( 
             (
                 (.metadata.name | test("^es-.*-all-.*") ) or 
-                (.metadata.name | test("^pg-.*") ) or (.metadata.name | test("^postgres*") )
+                (.metadata.name | test("^pg-.*") ) or 
+                (.metadata.name | test("^postgres*") ) or 
+                (.metadata.name | test(".*scale.*") ) 
             )   and 
                 ( (.metadata.name | test("^pg-psql-.*") | not) and 
                   (.metadata.name | test("^pg-grafana.*") | not ) and 
@@ -26,7 +28,7 @@ networkpolicies_json=$(oc get networkpolicies --all-namespaces -o json | jq '[.i
 echo $networkpolicies_json > networkpolicies.json
 
 # Fetch all deployments across all namespaces once
-deployments_json=$(oc get deployments --all-namespaces -o json | jq '[.items[] | { name: .metadata.name, namespace: .metadata.namespace, labels: .metadata.labels }]')
+deployments_json=$(oc get deployments --all-namespaces -o json | jq '[.items[] | { name: .metadata.name, namespace: .metadata.namespace, labels: .metadata.labels, podLabels: .spec.template.metadata.labels }]')
 echo $deployments_json > deployments.json
 
 # Build the namespace objects with their networkpolicies and deployments

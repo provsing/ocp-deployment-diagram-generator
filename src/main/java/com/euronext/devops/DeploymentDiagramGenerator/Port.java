@@ -14,6 +14,16 @@ public class Port {
     public String port;
     public String protocol;
     public String targetPort;    
+    public int id;
+    private static int nextId = 0;
+
+    public Port(){
+        id = Port.nextId();
+    }
+
+    private synchronized static int nextId(){
+        return nextId++;
+    }    
 
     @Override
     public String toString() {
